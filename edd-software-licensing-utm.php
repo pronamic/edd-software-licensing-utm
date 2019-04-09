@@ -328,6 +328,10 @@ class PronamicEasyDigitalDownloadsSoftwareLicensingUtmPlugin {
 			'utm_content'  => FILTER_SANITIZE_STRING,
 		) );
 
+		if ( empty( $parameters ) ) {
+			return $uri;
+		}
+
 		$parameters = array_filter( $parameters );
 
 		if ( empty( $parameters ) ) {
