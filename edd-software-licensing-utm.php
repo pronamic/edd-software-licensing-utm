@@ -27,6 +27,13 @@ class PronamicEasyDigitalDownloadsSoftwareLicensingUtmPlugin {
 	private $file;
 
 	/**
+	 * Part.
+	 *
+	 * @var string
+	 */
+	private $part;
+
+	/**
 	 * Construct.
 	 *
 	 * @param string $file Plugin file.
@@ -62,7 +69,7 @@ class PronamicEasyDigitalDownloadsSoftwareLicensingUtmPlugin {
 
 		register_setting( 'general', 'pronamic_edd_sl_renewal_url_utm_medium', array(
 			'type'              => 'string',
-			'description'       => __( 'Use `utm_source` to identify a search engine, newsletter name, or other source.', 'pronamic-edd-sl-utm' ),
+			'description'       => __( 'Use `utm_medium` to identify a medium such as email or cost-per- click.', 'pronamic-edd-sl-utm' ),
 			'sanitize_callback' => 'sanitize_text_field',
 		) );
 
@@ -161,10 +168,6 @@ class PronamicEasyDigitalDownloadsSoftwareLicensingUtmPlugin {
 	public function settings_section_callback() {
 		$url = 'https://ga-dev-tools.appspot.com/campaign-url-builder/';
 
-		$codes = array(
-			'{name}' => __( 'The name of the license \'title\'.', 'pronamic-edd-sl-utm' ),
-		);
-
 		?>
 		<p>
 			<?php
@@ -187,16 +190,127 @@ class PronamicEasyDigitalDownloadsSoftwareLicensingUtmPlugin {
 			</thead>
 
 			<tbody>
-				
-				<?php foreach ( $codes as $code => $description ) : ?>
+				<tr>
+					<td>
+						<code>{name}</code>
+					</td>
+					<td>
+						<?php echo esc_html__( 'The name of the license \'title\'.', 'pronamic-edd-sl-utm' ); ?>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<code>{source}</code>
+					</td>
+					<td>
+						<table>
+							<thead>
+								<tr>
+									<th scope="col"><?php esc_html_e( 'Value', 'pronamic-edd-sl-utm' ); ?></th>
+									<th scope="col"><?php esc_html_e( 'Description', 'pronamic-edd-sl-utm' ); ?></th>
+									<th scope="col"><?php esc_html_e( 'Link', 'pronamic-edd-sl-utm' ); ?></th>
+								</tr>
+							</thead>
 
-					<tr>
-						<td><?php echo esc_html( $code ); ?></td>
-						<td><?php echo esc_html( $description ); ?></td>
-					</tr>
+							<tbody>
+								<tr>
+									<td>
+										<code>edd-sl-template-part-license-keys</code>
+									</td>
+									<td>
+										<?php esc_html_e( 'In template part license-keys, also used in shortcode [edd_license_keys].', 'pronamic-edd-sl-utm' ); ?>
+									</td>
+									<td>
+										<a href="https://github.com/wp-premium/edd-software-licensing/blob/3.6.8/includes/shortcodes.php#L21">https://github.com/wp-premium/edd-software-licensing/blob/3.6.8/includes/shortcodes.php#L21</a>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<code>edd-sl-admin-license-view</code>
+									</td>
+									<td>
+										<?php esc_html_e( 'In admin license view.', 'pronamic-edd-sl-utm' ); ?>
+									</td>
+									<td>
+										<a href="https://github.com/wp-premium/edd-software-licensing/blob/3.6.8/includes/admin/licenses.php#L8-L23">https://github.com/wp-premium/edd-software-licensing/blob/3.6.8/includes/admin/licenses.php#L8-L23</a>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<code>edd-sl-renewal-reminder</code>
+									</td>
+									<td>
+										<?php esc_html_e( 'In renewal reminder.', 'pronamic-edd-sl-utm' ); ?>
+									</td>
+									<td>
+										<a href="https://github.com/wp-premium/edd-software-licensing/blob/3.6.8/includes/classes/class-sl-emails.php#L41-L123">https://github.com/wp-premium/edd-software-licensing/blob/3.6.8/includes/classes/class-sl-emails.php#L41-L123</a>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<code>edd-sl-unknown</code>
+									</td>
+									<td>
+										<?php esc_html_e( 'Unknown source.', 'pronamic-edd-sl-utm' ); ?>
+									</td>
+									<td>
 
-				<?php endforeach; ?>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<code>{medium}</code>
+					</td>
+					<td>
+						<table>
+							<thead>
+								<tr>
+									<th scope="col"><?php esc_html_e( 'Value', 'pronamic-edd-sl-utm' ); ?></th>
+									<th scope="col"><?php esc_html_e( 'Description', 'pronamic-edd-sl-utm' ); ?></th>
+								</tr>
+							</thead>
 
+							<tbody>
+								<tr>
+									<td>
+										<code>email</code>
+									</td>
+									<td>
+										<?php esc_html_e( 'In renewal reminder.', 'pronamic-edd-sl-utm' ); ?>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<code>website</code>
+									</td>
+									<td>
+										<?php esc_html_e( 'In website.', 'pronamic-edd-sl-utm' ); ?>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<code>admin</code>
+									</td>
+									<td>
+										<?php esc_html_e( 'In admin.', 'pronamic-edd-sl-utm' ); ?>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<code>unknown</code>
+									</td>
+									<td>
+										<?php esc_html_e( 'Unknown medium.', 'pronamic-edd-sl-utm' ); ?>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
 			</tbody>
 		</table>
 		<?php
@@ -281,7 +395,9 @@ class PronamicEasyDigitalDownloadsSoftwareLicensingUtmPlugin {
 	 */
 	public function extend_edd_sl_renewal_url_with_utm( $url, $license_id, $license ) {
 		$replace_pairs = array(
-			'{name}' => $license->get_name(),
+			'{name}'   => $license->get_name(),
+			'{source}' => $this->get_source(),
+			'{medium}' => $this->get_medium(),
 		);
 
 		$map = 	array(
@@ -343,6 +459,73 @@ class PronamicEasyDigitalDownloadsSoftwareLicensingUtmPlugin {
 		$uri = add_query_arg( $parameters, $uri );
 
 		return $uri;
+	}
+
+	/**
+	 * Get source.
+	 */
+	private function get_source() {
+		$backtrace = debug_backtrace();
+
+		foreach ( $backtrace as $trace ) {
+			$function  = null;
+			$arguments = null;
+
+			if ( array_key_exists( 'function', $trace ) ) {
+				$function = $trace['function'];
+			}
+
+			if ( array_key_exists( 'args', $trace ) && is_array( $trace['args'] ) ) {
+				$arguments = $trace['args'];
+			}
+
+			/**
+			 * Template part license keys.
+			 *
+			 * @link https://github.com/wp-premium/edd-software-licensing/blob/3.6.8/includes/shortcodes.php#L21
+			 */
+			if ( 'edd_get_template_part' === $function && 'license' === array_shift( $arguments ) && 'keys' === array_shift( $arguments ) ) {
+				return 'edd-sl-template-part-license-keys';
+			}
+
+			/**
+			 * License page.
+			 *
+			 * @link https://github.com/wp-premium/edd-software-licensing/blob/3.6.8/includes/admin/licenses.php#L8-L23
+			 */
+			if ( 'edd_sl_render_license_view' === $function ) {
+				return 'edd-sl-admin-license-view';
+			}
+
+			/**
+			 * Renewal reminder.
+			 *
+			 * @link https://github.com/wp-premium/edd-software-licensing/blob/3.6.8/includes/classes/class-sl-emails.php#L41-L123
+			 */
+			if ( 'send_renewal_reminder' === $function ) {
+				return 'edd-sl-renewal-reminder';
+			}
+		}
+
+		return 'edd-sl-unknown';
+	}
+
+	/**
+	 * Get medium.
+	 */
+	private function get_medium() {
+		$source = $this->get_source();
+
+		switch ( $source ) {
+			case 'edd-sl-template-part-license-keys':
+				return 'website';
+			case 'edd-sl-admin-license-view':
+				return 'wp-admin';
+			case 'edd-sl-renewal-reminder':
+				return 'email';
+			default:
+				return 'unknown';
+		}
 	}
 }
 
