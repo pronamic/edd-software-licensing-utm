@@ -27,13 +27,6 @@ class PronamicEasyDigitalDownloadsSoftwareLicensingUtmPlugin {
 	private $file;
 
 	/**
-	 * Part.
-	 *
-	 * @var string
-	 */
-	private $part;
-
-	/**
 	 * Construct.
 	 *
 	 * @param string $file Plugin file.
